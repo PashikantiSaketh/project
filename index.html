@@ -1,0 +1,1187 @@
+   
+<!DOCTYPE html>
+<html >
+    <style>
+        .background {
+    			background-color: #74a3b4;
+    			height: 100vh;
+    			padding-top: 1px;
+    		}
+     #reset {
+    			background-color: #FF3860;
+    			display: flex;
+    			flex-direction: row;
+    			justify-content: center;
+    			align-items: center;
+    			margin-top: 1em;
+    			color: white;
+    			padding: 8px;
+    			border-radius: 8px;
+    			border: none;
+    			font-size: 20px;
+    			margin-left: 1em;
+    			cursor: pointer;
+    			background-color: #FF3860;
+			}
+    </style>
+<body  class="background">
+    
+ <div class="login" align="center">
+	<h1>Seasonal Crop Yeild Prediction</h1><br><br>
+
+
+    <form action="{{ url_for('predict')}}"method="post">
+    	<input type="text" name="state" placeholder="state" required="required" /><br><br>
+        <input type="text" name="district" placeholder="district" required="required" /><br><br>
+		<input type="text" name="year" placeholder="year" required="required" /><br><br>
+        <input type="text" name="season" placeholder="season" required="required" /><br><br>
+        <input type="text" name="crop" placeholder="crop" required="required" /><br><br>
+        <input type="text" name="Temperature" placeholder="Temperature" required="required" /><br><br>
+        <input type="text" name="humidity" placeholder="humidity" required="required" /><br><br>
+        <input type="text" name="soilmoisture" placeholder="soilmoisture" required="required" /><br><br>
+        <input type="text" name="area" placeholder="area" required="required" /><br><br>
+
+
+        <button id="reset" type="submit" class="btn btn-primary btn-block btn-large"> Predict! </button>
+    </form>
+
+   <br>
+   <br>
+   <h3>{{ prediction_text }}</h3>
+   <h2>Guide</h2>
+   <table class="table table-bordered table-hover table-condensed" border="1px solid blue">
+	<thead><tr><th title="Field #1">Num</th>
+	<th title="Field #2">District</th>
+	<th title="Field #3">Num</th>
+	<th title="Field #4">State</th>
+	<th title="Field #5">Num</th>
+	<th title="Field #6">Season</th>
+	<th title="Field #7">Num</th>
+	<th title="Field #8">Crop</th>
+	</tr></thead>
+	<tbody><tr>
+	<td align="right">0</td>
+	<td>ANANTAPUR</td>
+	<td align="right">0</td>
+	<td>Andaman and Nicobar Islands</td>
+	<td align="right">0</td>
+	<td>Autumn</td>
+	<td align="right">0</td>
+	<td>Arecanut</td>
+	</tr>
+	<tr>
+	<td align="right">1</td>
+	<td>ANJAW</td>
+	<td align="right">1</td>
+	<td>Andhra Pradesh</td>
+	<td align="right">1</td>
+	<td>Kharif</td>
+	<td align="right">1</td>
+	<td>Arhar/Tur</td>
+	</tr>
+	<tr>
+	<td align="right">2</td>
+	<td>ARARIA</td>
+	<td align="right">2</td>
+	<td>Arunachal Pradesh</td>
+	<td align="right">2</td>
+	<td>Rabi</td>
+	<td align="right">2</td>
+	<td>Bajra</td>
+	</tr>
+	<tr>
+	<td align="right">3</td>
+	<td>ARWAL</td>
+	<td align="right">3</td>
+	<td>Assam</td>
+	<td align="right">3</td>
+	<td>Summer</td>
+	<td align="right">3</td>
+	<td>Banana</td>
+	</tr>
+	<tr>
+	<td align="right">4</td>
+	<td>AURANGABAD</td>
+	<td align="right">4</td>
+	<td>Bihar</td>
+	<td align="right">4</td>
+	<td>Whole Year</td>
+	<td align="right">4</td>
+	<td>Barley</td>
+	</tr>
+	<tr>
+	<td align="right">5</td>
+	<td>BAKSA</td>
+	<td align="right">5</td>
+	<td>Chandigarh</td>
+	<td align="right">5</td>
+	<td>Winter</td>
+	<td align="right">5</td>
+	<td>Beans &amp; Mutter(Vegetable)</td>
+	</tr>
+	<tr>
+	<td align="right">6</td>
+	<td>BALOD</td>
+	<td align="right">6</td>
+	<td>Chhattisgarh</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">6</td>
+	<td>Bhindi</td>
+	</tr>
+	<tr>
+	<td align="right">7</td>
+	<td>BALODA BAZAR</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">7</td>
+	<td>Black pepper</td>
+	</tr>
+	<tr>
+	<td align="right">8</td>
+	<td>BALRAMPUR</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">8</td>
+	<td>Blackgram</td>
+	</tr>
+	<tr>
+	<td align="right">9</td>
+	<td>BANKA</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">9</td>
+	<td>Bottle Gourd</td>
+	</tr>
+	<tr>
+	<td align="right">10</td>
+	<td>BARPETA</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">10</td>
+	<td>Brinjal</td>
+	</tr>
+	<tr>
+	<td align="right">11</td>
+	<td>BASTAR</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">11</td>
+	<td>Cabbage</td>
+	</tr>
+	<tr>
+	<td align="right">12</td>
+	<td>BEGUSARAI</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">12</td>
+	<td>Cashewnut</td>
+	</tr>
+	<tr>
+	<td align="right">13</td>
+	<td>BEMETARA</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">13</td>
+	<td>Castor seed</td>
+	</tr>
+	<tr>
+	<td align="right">14</td>
+	<td>BHAGALPUR</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">14</td>
+	<td>Citrus Fruit</td>
+	</tr>
+	<tr>
+	<td align="right">15</td>
+	<td>BHOJPUR</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">15</td>
+	<td>Coconut </td>
+	</tr>
+	<tr>
+	<td align="right">16</td>
+	<td>BIJAPUR</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">16</td>
+	<td>Coriander</td>
+	</tr>
+	<tr>
+	<td align="right">17</td>
+	<td>BILASPUR</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">17</td>
+	<td>Cotton(lint)</td>
+	</tr>
+	<tr>
+	<td align="right">18</td>
+	<td>BONGAIGAON</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">18</td>
+	<td>Cowpea(Lobia)</td>
+	</tr>
+	<tr>
+	<td align="right">19</td>
+	<td>BUXAR</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">19</td>
+	<td>Cucumber</td>
+	</tr>
+	<tr>
+	<td align="right">20</td>
+	<td>CACHAR</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">20</td>
+	<td>Dry chillies</td>
+	</tr>
+	<tr>
+	<td align="right">21</td>
+	<td>CHANDIGARH</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">21</td>
+	<td>Dry ginger</td>
+	</tr>
+	<tr>
+	<td align="right">22</td>
+	<td>CHANGLANG</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">22</td>
+	<td>Garlic</td>
+	</tr>
+	<tr>
+	<td align="right">23</td>
+	<td>CHIRANG</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">23</td>
+	<td>Ginger</td>
+	</tr>
+	<tr>
+	<td align="right">24</td>
+	<td>CHITTOOR</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">24</td>
+	<td>Gram</td>
+	</tr>
+	<tr>
+	<td align="right">25</td>
+	<td>DANTEWADA</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">25</td>
+	<td>Grapes</td>
+	</tr>
+	<tr>
+	<td align="right">26</td>
+	<td>DARBHANGA</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">26</td>
+	<td>Groundnut</td>
+	</tr>
+	<tr>
+	<td align="right">27</td>
+	<td>DARRANG</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">27</td>
+	<td>Guar seed</td>
+	</tr>
+	<tr>
+	<td align="right">28</td>
+	<td>DHAMTARI</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">28</td>
+	<td>Horse-gram</td>
+	</tr>
+	<tr>
+	<td align="right">29</td>
+	<td>DHEMAJI</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">29</td>
+	<td>Jowar</td>
+	</tr>
+	<tr>
+	<td align="right">30</td>
+	<td>DHUBRI</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">30</td>
+	<td>Jute</td>
+	</tr>
+	<tr>
+	<td align="right">31</td>
+	<td>DIBANG VALLEY</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">31</td>
+	<td>Khesari</td>
+	</tr>
+	<tr>
+	<td align="right">32</td>
+	<td>DIBRUGARH</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">32</td>
+	<td>Korra</td>
+	</tr>
+	<tr>
+	<td align="right">33</td>
+	<td>DIMA HASAO</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">33</td>
+	<td>Lemon</td>
+	</tr>
+	<tr>
+	<td align="right">34</td>
+	<td>DURG</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">34</td>
+	<td>Linseed</td>
+	</tr>
+	<tr>
+	<td align="right">35</td>
+	<td>EAST GODAVARI</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">35</td>
+	<td>Maize</td>
+	</tr>
+	<tr>
+	<td align="right">36</td>
+	<td>EAST KAMENG</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">36</td>
+	<td>Mango</td>
+	</tr>
+	<tr>
+	<td align="right">37</td>
+	<td>EAST SIANG</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">37</td>
+	<td>Masoor</td>
+	</tr>
+	<tr>
+	<td align="right">38</td>
+	<td>GARIYABAND</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">38</td>
+	<td>Mesta</td>
+	</tr>
+	<tr>
+	<td align="right">39</td>
+	<td>GAYA</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">39</td>
+	<td>Moong(Green Gram)</td>
+	</tr>
+	<tr>
+	<td align="right">40</td>
+	<td>GOALPARA</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">40</td>
+	<td>Niger seed</td>
+	</tr>
+	<tr>
+	<td align="right">41</td>
+	<td>GOLAGHAT</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">41</td>
+	<td>Oilseeds total</td>
+	</tr>
+	<tr>
+	<td align="right">42</td>
+	<td>GOPALGANJ</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">42</td>
+	<td>Onion</td>
+	</tr>
+	<tr>
+	<td align="right">43</td>
+	<td>GUNTUR</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">43</td>
+	<td>Orange</td>
+	</tr>
+	<tr>
+	<td align="right">44</td>
+	<td>HAILAKANDI</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">44</td>
+	<td>Other  Rabi pulses</td>
+	</tr>
+	<tr>
+	<td align="right">45</td>
+	<td>JAMUI</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">45</td>
+	<td>other fibres</td>
+	</tr>
+	<tr>
+	<td align="right">46</td>
+	<td>JANJGIR-CHAMPA</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">46</td>
+	<td>Other Fresh Fruits</td>
+	</tr>
+	<tr>
+	<td align="right">47</td>
+	<td>JEHANABAD</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">47</td>
+	<td>Other Kharif pulses</td>
+	</tr>
+	<tr>
+	<td align="right">48</td>
+	<td>JORHAT</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">48</td>
+	<td>other misc. pulses</td>
+	</tr>
+	<tr>
+	<td align="right">49</td>
+	<td>KADAPA</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">49</td>
+	<td>other oilseeds</td>
+	</tr>
+	<tr>
+	<td align="right">50</td>
+	<td>KAIMUR (BHABUA)</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">50</td>
+	<td>Other Vegetables</td>
+	</tr>
+	<tr>
+	<td align="right">51</td>
+	<td>KAMRUP</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">51</td>
+	<td>Paddy</td>
+	</tr>
+	<tr>
+	<td align="right">52</td>
+	<td>KAMRUP METRO</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">52</td>
+	<td>Papaya</td>
+	</tr>
+	<tr>
+	<td align="right">53</td>
+	<td>KARBI ANGLONG</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">53</td>
+	<td>Peas  (vegetable)</td>
+	</tr>
+	<tr>
+	<td align="right">54</td>
+	<td>KARIMGANJ</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">54</td>
+	<td>Peas &amp; beans (Pulses)</td>
+	</tr>
+	<tr>
+	<td align="right">55</td>
+	<td>KATIHAR</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">55</td>
+	<td>Pineapple</td>
+	</tr>
+	<tr>
+	<td align="right">56</td>
+	<td>KHAGARIA</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">56</td>
+	<td>Pome Fruit</td>
+	</tr>
+	<tr>
+	<td align="right">57</td>
+	<td>KISHANGANJ</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">57</td>
+	<td>Pome Granet</td>
+	</tr>
+	<tr>
+	<td align="right">58</td>
+	<td>KOKRAJHAR</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">58</td>
+	<td>Potato</td>
+	</tr>
+	<tr>
+	<td align="right">59</td>
+	<td>KRISHNA</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">59</td>
+	<td>Pulses total</td>
+	</tr>
+	<tr>
+	<td align="right">60</td>
+	<td>KURNOOL</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">60</td>
+	<td>Ragi</td>
+	</tr>
+	<tr>
+	<td align="right">61</td>
+	<td>KURUNG KUMEY</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">61</td>
+	<td>Rapeseed &amp;Mustard</td>
+	</tr>
+	<tr>
+	<td align="right">62</td>
+	<td>LAKHIMPUR</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">62</td>
+	<td>Rice</td>
+	</tr>
+	<tr>
+	<td align="right">63</td>
+	<td>LAKHISARAI</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">63</td>
+	<td>Safflower</td>
+	</tr>
+	<tr>
+	<td align="right">64</td>
+	<td>LOHIT</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">64</td>
+	<td>Samai</td>
+	</tr>
+	<tr>
+	<td align="right">65</td>
+	<td>LONGDING</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">65</td>
+	<td>Sannhamp</td>
+	</tr>
+	<tr>
+	<td align="right">66</td>
+	<td>LOWER DIBANG VALLEY</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">66</td>
+	<td>Sapota</td>
+	</tr>
+	<tr>
+	<td align="right">67</td>
+	<td>LOWER SUBANSIRI</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">67</td>
+	<td>Sesamum</td>
+	</tr>
+	<tr>
+	<td align="right">68</td>
+	<td>MADHEPURA</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">68</td>
+	<td>Small millets</td>
+	</tr>
+	<tr>
+	<td align="right">69</td>
+	<td>MADHUBANI</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">69</td>
+	<td>Soyabean</td>
+	</tr>
+	<tr>
+	<td align="right">70</td>
+	<td>MARIGAON</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">70</td>
+	<td>Sugarcane</td>
+	</tr>
+	<tr>
+	<td align="right">71</td>
+	<td>MUNGER</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">71</td>
+	<td>Sunflower</td>
+	</tr>
+	<tr>
+	<td align="right">72</td>
+	<td>MUZAFFARPUR</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">72</td>
+	<td>Sweet potato</td>
+	</tr>
+	<tr>
+	<td align="right">73</td>
+	<td>NAGAON</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">73</td>
+	<td>Tapioca</td>
+	</tr>
+	<tr>
+	<td align="right">74</td>
+	<td>NALANDA</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">74</td>
+	<td>Tobacco</td>
+	</tr>
+	<tr>
+	<td align="right">75</td>
+	<td>NALBARI</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">75</td>
+	<td>Tomato</td>
+	</tr>
+	<tr>
+	<td align="right">76</td>
+	<td>NAMSAI</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">76</td>
+	<td>Turmeric</td>
+	</tr>
+	<tr>
+	<td align="right">77</td>
+	<td>NAWADA</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">77</td>
+	<td>Urad</td>
+	</tr>
+	<tr>
+	<td align="right">78</td>
+	<td>NICOBARS</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">78</td>
+	<td>Varagu</td>
+	</tr>
+	<tr>
+	<td align="right">79</td>
+	<td>NORTH AND MIDDLE ANDAMAN</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right">79</td>
+	<td>Wheat</td>
+	</tr>
+	<tr>
+	<td align="right">80</td>
+	<td>PAPUM PARE</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	</tr>
+	<tr>
+	<td align="right">81</td>
+	<td>PASHCHIM CHAMPARAN</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	</tr>
+	<tr>
+	<td align="right">82</td>
+	<td>PATNA</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	</tr>
+	<tr>
+	<td align="right">83</td>
+	<td>PRAKASAM</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	</tr>
+	<tr>
+	<td align="right">84</td>
+	<td>PURBI CHAMPARAN</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	</tr>
+	<tr>
+	<td align="right">85</td>
+	<td>PURNIA</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	</tr>
+	<tr>
+	<td align="right">86</td>
+	<td>ROHTAS</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	</tr>
+	<tr>
+	<td align="right">87</td>
+	<td>SAHARSA</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	</tr>
+	<tr>
+	<td align="right">88</td>
+	<td>SAMASTIPUR</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	</tr>
+	<tr>
+	<td align="right">89</td>
+	<td>SARAN</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	</tr>
+	<tr>
+	<td align="right">90</td>
+	<td>SHEIKHPURA</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	</tr>
+	<tr>
+	<td align="right">91</td>
+	<td>SHEOHAR</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	</tr>
+	<tr>
+	<td align="right">92</td>
+	<td>SITAMARHI</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	</tr>
+	<tr>
+	<td align="right">93</td>
+	<td>SIVASAGAR</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	</tr>
+	<tr>
+	<td align="right">94</td>
+	<td>SIWAN</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	</tr>
+	<tr>
+	<td align="right">95</td>
+	<td>SONITPUR</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	</tr>
+	<tr>
+	<td align="right">96</td>
+	<td>SOUTH ANDAMANS</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	</tr>
+	<tr>
+	<td align="right">97</td>
+	<td>SPSR NELLORE</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	</tr>
+	<tr>
+	<td align="right">98</td>
+	<td>SRIKAKULAM</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	</tr>
+	<tr>
+	<td align="right">99</td>
+	<td>SUPAUL</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	</tr>
+	<tr>
+	<td align="right">100</td>
+	<td>TAWANG</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	</tr>
+	<tr>
+	<td align="right">101</td>
+	<td>TINSUKIA</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	</tr>
+	<tr>
+	<td align="right">102</td>
+	<td>TIRAP</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	</tr>
+	<tr>
+	<td align="right">103</td>
+	<td>UDALGURI</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	</tr>
+	<tr>
+	<td align="right">104</td>
+	<td>UPPER SIANG</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	</tr>
+	<tr>
+	<td align="right">105</td>
+	<td>UPPER SUBANSIRI</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	</tr>
+	<tr>
+	<td align="right">106</td>
+	<td>VAISHALI</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	</tr>
+	<tr>
+	<td align="right">107</td>
+	<td>VISAKHAPATANAM</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	</tr>
+	<tr>
+	<td align="right">108</td>
+	<td>VIZIANAGARAM</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	</tr>
+	<tr>
+	<td align="right">109</td>
+	<td>WEST GODAVARI</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	</tr>
+	<tr>
+	<td align="right">110</td>
+	<td>WEST KAMENG</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	</tr>
+	<tr>
+	<td align="right">111</td>
+	<td>WEST SIANG</td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	<td align="right"></td>
+	<td> </td>
+	</tr>
+	</tbody></table>
+
+ </div>
+
+</body>
+</html>
